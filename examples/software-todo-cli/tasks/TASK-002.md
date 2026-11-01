@@ -2,12 +2,12 @@
 id: TASK-002
 project: software-todo-cli
 title: Implementar o comando done
-status: review
+status: done
 owner: Gleyber Rodrigues
 created: 2026-11-01
 updated: 2026-11-01
-last_agent: claude
-last_model: claude-opus-5-5
+last_agent: human
+last_model:
 ---
 
 # TASK-002: Implementar o comando done
@@ -30,19 +30,17 @@ last_model: claude-opus-5-5
 
 ## Estado atual
 
-Comando `done` implementado pelo GPT e revisado pelo Claude (revisão cruzada: quem escreveu não revisou). Código, testes e comportamento pelo terminal conferem com o critério de pronto, D-001 e D-002. Pronta para aprovação humana.
-
-Sessão do GPT (registro original): done com persistência em todo.json, erro e saída 1 para ID inexistente ou não inteiro; 12 testes passando em Python 3.14, a partir só do pacote.
+Concluída e aprovada pelo humano em 2026-11-01, após a revisão cruzada do Claude. O comando `done` está no ar.
 
 ## Handoff
 
-- **Arquivos alterados:** `tasks/TASK-002.md`
+- **Arquivos alterados:** `tasks/TASK-002.md`, `tasks/TASK-001.md`, `PROJECT.md`
 - **Bloqueios atuais:** nenhum
 - **Próximos 3 passos:**
-  1. Humano aprova o merge desta tarefa e marca o status como `done`.
-  2. Atualizar a "Situação atual" do `PROJECT.md`: `add`, `list` e `done` implementados.
+  1. Nenhum trabalho pendente nesta tarefa.
+  2. Novas funções do Todo CLI entram como novas tarefas (TASK-003 em diante).
   3. Opcional: rodar os testes num Python 3.10 para fechar a verificação de D-001.
-- **Validação:** o Claude integrou os três arquivos do GPT sem alteração e revisou o diff (só acréscimos em `todo.py`: função `done` e o ramo `done` no `main`). Rodou `python3 -m pytest` em Python 3.13.18: 12 testes passaram, confirmando o relato do GPT (3.14). `todo.py` e `test_todo.py` compilam em 3.11 e 3.12, mas os testes não foram executados nessas versões (pytest ausente). Python 3.10 não verificado: nenhum recurso usado exige versão maior. Uso real pelo terminal: `add`, `done 2`, `list`, `done 99` (saída 1), `done abc` (saída 1), `done -1` (saída 1), `done 01` (aceito como 1); o `todo.json` ficou correto.
+- **Validação:** aprovação humana registrada. Testes conferidos na revisão do Claude (12 passando em 3.13).
 
 ## Propostas de decisão
 
@@ -54,6 +52,7 @@ Sessão do GPT (registro original): done com persistência em todo.json, erro e 
 
 Uma linha por sessão, a mais recente no topo.
 
+- 2026-11-01 · human · aprovou o merge; status → done
 - 2026-11-01 · claude · revisão cruzada: 12 testes passaram em 3.13, uso pelo terminal conferido; pergunta 5 corrigida no protocolo
 - 2026-11-01 · gpt · implementou done e testes; 12 testes passaram; enviado para revisão
 - 2026-11-01 · human · tarefa criada

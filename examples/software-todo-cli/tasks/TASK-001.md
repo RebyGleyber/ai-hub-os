@@ -2,12 +2,12 @@
 id: TASK-001
 project: software-todo-cli
 title: Implementar os comandos add e list
-status: review
+status: done
 owner: Gleyber Rodrigues
 created: 2026-11-01
 updated: 2026-11-01
-last_agent: claude
-last_model: claude-opus-5-5
+last_agent: human
+last_model:
 ---
 
 # TASK-001: Implementar os comandos add e list
@@ -21,7 +21,7 @@ last_model: claude-opus-5-5
 - [x] `add` cria itens com IDs sequenciais e salva em `todo.json`
 - [x] `list` mostra `[ ]` ou `[x]` antes de cada item
 - [x] Testes automatizados cobrindo `add` e `list`
-- [ ] Revisão humana aprovada
+- [x] Revisão humana aprovada
 
 ## Leitura obrigatória
 
@@ -31,17 +31,17 @@ last_model: claude-opus-5-5
 
 ## Estado atual
 
-Comandos `add` e `list` implementados em `todo.py`, com 4 testes em `test_todo.py`. Aguardando revisão humana. O comando `done` ficou fora desta tarefa e está na TASK-002.
+Concluída. Aprovada pelo humano em 2026-11-01 junto com a TASK-002, que se apoia neste código.
 
 ## Handoff
 
-- **Arquivos alterados:** `todo.py`, `test_todo.py`
+- **Arquivos alterados:** `tasks/TASK-001.md`
 - **Bloqueios atuais:** nenhum
 - **Próximos 3 passos:**
-  1. Humano revisa `todo.py` e aprova o merge desta tarefa.
-  2. Mudar o status desta tarefa para `done` após o merge.
-  3. Iniciar a TASK-002 (comando `done`).
-- **Validação:** rodei `python -m pytest` na pasta do projeto: 4 testes passaram. Não testei manualmente pelo terminal.
+  1. Nenhum trabalho pendente nesta tarefa.
+  2. A continuação está registrada na TASK-002 (concluída).
+  3. Novas funções entram como novas tarefas.
+- **Validação:** aprovação humana registrada; os testes de `add` e `list` seguem passando na suíte atual (12 testes).
 
 ## Propostas de decisão
 
@@ -51,5 +51,6 @@ Comandos `add` e `list` implementados em `todo.py`, com 4 testes em `test_todo.p
 
 Uma linha por sessão, a mais recente no topo.
 
+- 2026-11-01 · human · aprovou junto com a TASK-002; status → done
 - 2026-11-01 · claude · implementou add e list com 4 testes; enviado para revisão
 - 2026-11-01 · human · tarefa criada

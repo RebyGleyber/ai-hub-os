@@ -29,10 +29,10 @@ Um gerenciador de tarefas de linha de comando, pequeno o bastante para servir de
 
 ## Contexto essencial
 
-- Situação atual: comandos `add` e `list` implementados; `done` ainda não existe.
+- Situação atual: comandos `add`, `list` e `done` implementados e aprovados (TASK-001 e TASK-002); 12 testes passando.
 - Usuários: uma pessoa, no próprio computador.
 - Abordagem: um único arquivo `todo.py`, sem dependências externas.
-- Uso: `python todo.py add "Comprar café"`, `python todo.py list`.
+- Uso: `python todo.py add "Comprar café"`, `python todo.py list`, `python todo.py done 1`.
 
 ## Restrições
 
