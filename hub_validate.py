@@ -344,6 +344,14 @@ def validate_task_file(path: Path, project_id: str | None, decisions: dict[str, 
     if created_d and updated_d and updated_d < created_d:
         report.error(name, "'updated' é anterior a 'created'")
 
+    assignee, reviewer = meta.get("assignee"), meta.get("reviewer")
+    if not is_empty(assignee) and not is_empty(reviewer) and str(assignee).strip().casefold() == str(reviewer).strip().casefold():
+        report.error(name, f"'assignee' e 'reviewer' são o mesmo ('{assignee}'): quem executa não revisa (EQUIPE.md)")
+    if status in ("doing", "review") and "assignee" in meta and is_empty(assignee):
+        report.warn(name, "tarefa em andamento sem 'assignee' (responsável) definido")
+    if status == "review" and "reviewer" in meta and is_empty(reviewer):
+        report.warn(name, "tarefa em revisão sem 'reviewer' definido")
+
     if status and status != "todo" and is_empty(meta.get("last_agent")):
         report.error(name, "'last_agent' é obrigatório quando a tarefa já começou")
 

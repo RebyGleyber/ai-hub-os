@@ -49,6 +49,7 @@ def start_task(project: Path, handoff: str = STARTED_HANDOFF) -> Path:
     task = project / "tasks" / "TASK-001.md"
     replace(task, "status: todo", "status: doing")
     replace(task, "last_agent: human", "last_agent: claude")
+    replace(task, "assignee:  ", "assignee: claude")
     replace(task, "- 2026-11-01 · human · tarefa criada",
             "- 2026-11-01 · claude · trabalhou no roteiro\n- 2026-11-01 · human · tarefa criada")
     text = task.read_text(encoding="utf-8")
@@ -363,3 +364,26 @@ def test_cli_exit_codes(project, capsys):
     replace(project / "tasks" / "TASK-001.md", "status: doing", "status: x")
     assert hub_validate.main([str(project)]) == 1
     assert "erro(s)" in capsys.readouterr().out
+
+
+# ------------------------------------------------ responsável e revisor (EQUIPE.md)
+
+def test_assignee_cannot_review_own_work(project):
+    task = project / "tasks" / "TASK-001.md"
+    replace(task, "assignee:  ", "assignee: gpt")
+    replace(task, "reviewer:  ", "reviewer: GPT")
+    assert has(hub_validate.validate_project(project), "quem executa não revisa")
+
+
+def test_review_without_reviewer_is_warning(project):
+    task = start_task(project)
+    replace(task, "status: doing", "status: review")
+    report = hub_validate.validate_project(project)
+    assert report.errors == []
+    assert has(report, "sem 'reviewer'", level="AVISO")
+
+
+def test_assignee_and_reviewer_different_is_clean(project):
+    task = start_task(project)
+    replace(task, "reviewer:  ", "reviewer: grok")
+    assert hub_validate.validate_project(project).issues == []

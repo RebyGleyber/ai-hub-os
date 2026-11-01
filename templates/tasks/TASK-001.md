@@ -4,6 +4,8 @@ project: nome-do-projeto
 title: Título curto da tarefa
 status: todo                   # todo | doing | review | done | blocked
 owner: Nome do responsável      # quem responde pela tarefa
+assignee:                      # IA ou pessoa que executa (claude | gpt | gemini | grok | human)
+reviewer:                      # quem revisa a entrega; nunca o mesmo que assignee
 created: 2026-11-01
 updated: 2026-11-01
 last_agent: human              # human | claude | gpt | gemini | outro
