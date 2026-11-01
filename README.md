@@ -6,6 +6,7 @@ Um protocolo simples para que qualquer IA (Claude, ChatGPT, Gemini, Grok ou outr
 - Templates: [`templates/`](templates)
 - Exemplos preenchidos: [`examples/`](examples) (software, criativo e pesquisa; marcas fictícias)
 - Validador: [`hub_validate.py`](hub_validate.py)
+- Organização do time de IAs: [`EQUIPE.md`](EQUIPE.md) (proposta)
 
 ## Instalação
 
