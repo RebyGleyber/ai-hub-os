@@ -42,6 +42,9 @@ DECISION_HEADING_RE = re.compile(r"^##\s+(D-\d{3,})\s*:\s*(.*)$", re.MULTILINE)
 DECISION_REF_RE = re.compile(r"\bD-\d{3,}\b")
 FIELD_RE = re.compile(r"^\s*[-*]\s*\*\*(.+?):\*\*\s*(.*)$")
 NUMBERED_RE = re.compile(r"^\s*\d+[.)]\s*(.*)$")
+LOG_ENTRY_RE = re.compile(r"^\s*[-*]\s*(\d{4}-\d{2}-\d{2})\s*·\s*([^·]+?)\s*·")
+CHECKBOX_RE = re.compile(r"^\s*[-*]\s*\[([ xX])\]")
+BACKTICK_RE = re.compile(r"`([^`]+)`")
 
 EMPTY_VALUES = {"", "-", "—", "–"}
 NONE_VALUES = {"nenhum", "nenhuma", "none", "n/a"}
@@ -57,6 +60,8 @@ SECTION_ALIASES = {
     "objective": ("objetivo", "goal", "objective"),
     "state": ("estado atual", "current state"),
     "handoff": ("handoff",),
+    "criteria": ("critério de pronto", "criterio de pronto", "definition of done"),
+    "log": ("log de sessões", "log de sessoes", "session log"),
 }
 PROJECT_RULES_ALIASES = ("regras para qualquer ia", "rules for any ai")
 
@@ -270,8 +275,42 @@ def validate_decisions_file(root: Path, report: Report) -> dict[str, str]:
     return {dec_id: info["status"] for dec_id, info in decisions.items()}
 
 
-def validate_task_file(path: Path, project_id: str | None, decisions: dict[str, str], report: Report) -> None:
+def check_log(name: str, body: str, meta: dict, updated_d: dt.date | None, report: Report) -> None:
+    """A linha mais recente do Log precisa bater com 'updated' e 'last_agent'."""
+    log_text = find_section(body, SECTION_ALIASES["log"])
+    if log_text is None:
+        report.error(name, "seção '## Log de sessões' não encontrada")
+        return
+    entries = [m for m in (LOG_ENTRY_RE.match(line) for line in log_text.splitlines()) if m]
+    if not entries:
+        report.error(name, "Log de sessões sem entradas no formato '- AAAA-MM-DD · agente · resumo'")
+        return
+    log_date, log_agent = as_date(entries[0].group(1)), entries[0].group(2).strip()
+    if updated_d and log_date and log_date != updated_d:
+        report.error(name, f"a entrada mais recente do Log é de {log_date}, mas 'updated' é {updated_d}")
+    agent = meta.get("last_agent")
+    if not is_empty(agent) and log_agent.casefold() != str(agent).strip().casefold():
+        report.error(name, f"a entrada mais recente do Log é de '{log_agent}', mas 'last_agent' é '{agent}'")
+
+
+def check_criteria(name: str, body: str, status: str | None, report: Report) -> None:
+    """Avisa quando as caixas do Critério de pronto contradizem o status."""
+    text = find_section(body, SECTION_ALIASES["criteria"])
+    if text is None:
+        return
+    marks = [m.group(1) for m in (CHECKBOX_RE.match(line) for line in text.splitlines()) if m]
+    open_items = sum(1 for m in marks if m == " ")
+    closed_items = len(marks) - open_items
+    if status == "done" and open_items:
+        report.warn(name, f"status 'done' com {open_items} critério(s) de pronto desmarcado(s); se foi cancelada, explique no Estado atual")
+    if status == "todo" and closed_items:
+        report.warn(name, f"status 'todo' com {closed_items} critério(s) de pronto já marcado(s)")
+
+
+def validate_task_file(path: Path, project_id: str | None, decisions: dict[str, str], report: Report,
+                       root: Path | None = None) -> None:
     name = f"tasks/{path.name}"
+    root = root or path.parent.parent
     meta, body, err = split_front_matter(path.read_text(encoding="utf-8"))
     if err:
         report.error(name, err)
@@ -317,6 +356,9 @@ def validate_task_file(path: Path, project_id: str | None, decisions: dict[str, 
         if ref not in decisions:
             report.error(name, f"cita {ref}, que não existe em DECISIONS.md")
 
+    check_log(name, body, meta, updated_d, report)
+    check_criteria(name, body, status, report)
+
     handoff_text = find_section(body, SECTION_ALIASES["handoff"])
     if handoff_text is None:
         report.error(name, "seção '## Handoff' não encontrada")
@@ -327,8 +369,16 @@ def validate_task_file(path: Path, project_id: str | None, decisions: dict[str, 
     handoff = parse_handoff(handoff_text)
     values, steps = handoff["values"], handoff["steps"]
 
-    if is_empty(values.get("files")):
+    files_value = values.get("files")
+    if is_empty(files_value):
         report.error(name, "handoff incompleto: 'Arquivos alterados' vazio (use 'nenhum' se for o caso)")
+    elif str(files_value).strip().casefold() not in NONE_VALUES:
+        paths = BACKTICK_RE.findall(str(files_value))
+        if not paths:
+            report.warn(name, "em 'Arquivos alterados', escreva os caminhos entre crases para permitir a verificação")
+        for rel in paths:
+            if not (root / rel).exists():
+                report.error(name, f"'Arquivos alterados' cita `{rel}`, que não existe no projeto")
     if is_empty(values.get("blockers")):
         report.error(name, "handoff incompleto: 'Bloqueios atuais' vazio (use 'nenhum' se for o caso)")
     filled_steps = [s for s in steps if s]
@@ -363,7 +413,7 @@ def validate_project(root: Path | str) -> Report:
     if not task_files:
         report.error("tasks/", "nenhuma tarefa encontrada (esperado: tasks/TASK-001.md)")
     for task in task_files:
-        validate_task_file(task, project_id, decisions, report)
+        validate_task_file(task, project_id, decisions, report, root)
     return report
 
 

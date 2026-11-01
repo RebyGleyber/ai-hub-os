@@ -42,10 +42,15 @@ def replace(path: Path, old: str, new: str) -> None:
 
 
 def start_task(project: Path, handoff: str = STARTED_HANDOFF) -> Path:
-    """Muda a TASK-001 do template para 'doing' com um handoff completo."""
+    """Muda a TASK-001 do template para 'doing' com um handoff completo,
+    como se a IA 'claude' tivesse trabalhado nela e alterado roteiro.md."""
+    for name in ("roteiro.md", "script.md"):
+        (project / name).write_text("rascunho\n", encoding="utf-8")
     task = project / "tasks" / "TASK-001.md"
     replace(task, "status: todo", "status: doing")
     replace(task, "last_agent: human", "last_agent: claude")
+    replace(task, "- 2026-11-01 · human · tarefa criada",
+            "- 2026-11-01 · claude · trabalhou no roteiro\n- 2026-11-01 · human · tarefa criada")
     text = task.read_text(encoding="utf-8")
     start = text.index("## Handoff")
     end = text.index("## Propostas de decisão")
@@ -279,6 +284,55 @@ def test_english_labels_are_accepted(project):
 """
     start_task(project, english)
     assert hub_validate.validate_project(project).issues == []
+
+
+# ------------------------------------------- coerência do registro (v0.4.1)
+
+def test_listed_file_must_exist(project):
+    start_task(project, STARTED_HANDOFF.replace("`roteiro.md`", "`roteiro-final.md`"))
+    assert has(hub_validate.validate_project(project), "`roteiro-final.md`, que não existe")
+
+
+def test_listed_files_without_backticks_is_warning(project):
+    start_task(project, STARTED_HANDOFF.replace("`roteiro.md`", "roteiro.md"))
+    report = hub_validate.validate_project(project)
+    assert report.errors == []
+    assert has(report, "entre crases", level="AVISO")
+
+
+def test_log_must_match_last_agent(project):
+    task = start_task(project)
+    replace(task, "last_agent: claude", "last_agent: gemini")
+    assert has(hub_validate.validate_project(project), "mas 'last_agent' é 'gemini'")
+
+
+def test_log_must_match_updated(project):
+    task = start_task(project)
+    replace(task, "updated: 2026-11-01", "updated: 2026-11-03")
+    assert has(hub_validate.validate_project(project), "mas 'updated' é 2026-11-03")
+
+
+def test_log_section_required(project):
+    replace(project / "tasks" / "TASK-001.md", "## Log de sessões", "## Histórico")
+    assert has(hub_validate.validate_project(project), "'## Log de sessões'")
+
+
+def test_log_needs_entries(project):
+    replace(project / "tasks" / "TASK-001.md", "- 2026-11-01 · human · tarefa criada", "(vazio)")
+    assert has(hub_validate.validate_project(project), "sem entradas")
+
+
+def test_done_with_open_criteria_is_warning(project):
+    task = start_task(project)
+    replace(task, "status: doing", "status: done")
+    report = hub_validate.validate_project(project)
+    assert report.errors == []
+    assert has(report, "2 critério(s) de pronto desmarcado(s)", level="AVISO")
+
+
+def test_todo_with_closed_criteria_is_warning(project):
+    replace(project / "tasks" / "TASK-001.md", "- [ ] Critério verificável 1", "- [x] Critério verificável 1")
+    assert has(hub_validate.validate_project(project), "já marcado", level="AVISO")
 
 
 # --------------------------------------------------------------------- CLI

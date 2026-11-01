@@ -83,7 +83,8 @@ Opcional: `last_model` (nome e versão exatos do modelo).
 Seções do corpo, nesta ordem: Objetivo · Critério de pronto · Leitura obrigatória · Estado atual · Handoff · Propostas de decisão · Log de sessões.
 
 - **Estado atual** é reescrito a cada sessão: descreve onde o trabalho está agora.
-- **Log de sessões** ganha uma linha por sessão, a mais recente no topo.
+- **Log de sessões** ganha uma linha por sessão, a mais recente no topo, no formato `- AAAA-MM-DD · agente · resumo`. A linha mais recente precisa ter a mesma data de `updated` e o mesmo agente de `last_agent`. Isso flagra a IA que esqueceu de atualizar os metadados.
+- **Critério de pronto** usa caixas `- [ ]` / `- [x]`. Tarefa `done` com caixa desmarcada, ou `todo` com caixa marcada, gera aviso.
 
 ## 6. Estados
 
@@ -99,7 +100,7 @@ Seções do corpo, nesta ordem: Objetivo · Critério de pronto · Leitura obrig
 
 Toda IA, ao encerrar uma sessão, preenche a seção `## Handoff` com estes três itens obrigatórios:
 
-1. **Arquivos alterados:** caminhos, ou `nenhum`.
+1. **Arquivos alterados:** caminhos entre crases (relativos à raiz do projeto), ou `nenhum`. Cada caminho citado precisa existir.
 2. **Bloqueios atuais:** o que impede o avanço, ou `nenhum`.
 3. **Próximos 3 passos:** três ações exatas e numeradas para a próxima IA.
 
@@ -116,6 +117,11 @@ O handoff descreve o estado real do trabalho, não um resumo da conversa.
 3. Atualiza o `TASK-NNN.md` (metadados, Estado atual, Handoff, Log).
 4. Devolve cada arquivo alterado completo, num bloco de código com o caminho na primeira linha.
 5. O humano revisa, roda o validador e faz o commit.
+
+Regras de operação para o humano:
+
+- Entregue cada tarefa a uma IA por vez. Duas IAs na mesma tarefa geram versões conflitantes; se acontecer, o Git mostra o conflito no merge e você escolhe.
+- O validador confere a forma, não a verdade. Uma afirmação na Validação ("testes passaram") só vale depois de você ou outra IA conferir.
 
 ## 9. Critério de sucesso do MVP
 
