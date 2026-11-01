@@ -89,6 +89,16 @@ Se a IA errar alguma das cinco respostas, o handoff anterior estava incompleto: 
 
 ---
 
+## 7. Como fazer as IAs conversarem sem copiar e colar
+
+Use o GitHub como ponto de encontro: um pedido gravado no repositório do projeto é enviado pelo GitHub Actions a várias IAs (via OpenRouter), e as respostas voltam gravadas no repositório.
+
+1. Crie uma chave no OpenRouter, com limite de gastos, e salve-a como segredo `OPENROUTER_API_KEY` no repositório do projeto (Settings → Secrets and variables → Actions).
+2. Copie para o projeto o workflow `.github/workflows/rodada.yml` e o arquivo `rodadas/modelos.txt` (um modelo por linha).
+3. Para uma rodada nova, grave `rodadas/<nome>/pedido.md` (por exemplo, um pacote do `hub_pack.py`) e faça o push. As respostas aparecem em `rodadas/<nome>/respostas/`.
+
+Teste local sem gastar: `python hub_ask.py pedido.md --models modelos.txt --dry-run`.
+
 ## O que o validador verifica
 
 | Arquivo | Verificações |

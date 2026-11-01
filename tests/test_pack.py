@@ -34,3 +34,11 @@ def test_pack_writes_file(tmp_path):
     out = tmp_path / "pacote.md"
     assert hub_pack.main([str(TEASER), "TASK-002", "-o", str(out)]) == 0
     assert out.read_text(encoding="utf-8").startswith("# Pacote de contexto: TASK-002")
+
+
+def test_pack_redacts_confidential_lines():
+    text = "- **Status:** accepted\n- **Decisão:** 70/30 com a câmara. CONFIDENCIAL.\n- **Motivo:** x"
+    out = hub_pack.redact(text)
+    assert "70/30" not in out
+    assert "- **Decisão:** [conteúdo confidencial omitido neste pacote]" in out
+    assert "- **Motivo:** x" in out

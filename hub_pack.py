@@ -36,6 +36,17 @@ cada arquivo alterado ou criado completo, num bloco de código com o caminho
 """
 
 
+def redact(text: str) -> str:
+    """Omite linhas de decisão marcadas como CONFIDENCIAL (o pacote vai para outras empresas)."""
+    lines = []
+    for line in text.splitlines():
+        if "CONFIDENCIAL" in line and line.lstrip().startswith("- **"):
+            label = line.split(":**", 1)[0] + ":**" if ":**" in line else "- **Conteúdo:**"
+            line = f"{label} [conteúdo confidencial omitido neste pacote]"
+        lines.append(line)
+    return "\n".join(lines)
+
+
 def required_reading(task_body: str) -> list[str]:
     section = hub_validate.find_section(task_body, ("leitura obrigatória", "leitura obrigatoria", "required reading"))
     if section is None:
@@ -69,7 +80,7 @@ def build_pack(root: Path, task_id: str) -> str:
 
     parts = [PROMPT.format(task_id=task_id, project_id=project_id, task_path=task_rel)]
     for rel in files:
-        content = (root / rel).read_text(encoding="utf-8").rstrip("\n")
+        content = redact((root / rel).read_text(encoding="utf-8").rstrip("\n"))
         lang = {".py": "python", ".yaml": "yaml", ".yml": "yaml", ".json": "json"}.get(Path(rel).suffix, "markdown")
         parts.append(f"\n## `{rel}`\n\n````{lang}\n{content}\n````\n")
     return "".join(parts)
