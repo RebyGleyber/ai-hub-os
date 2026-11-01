@@ -48,4 +48,6 @@ Tarefa ainda não iniciada.
 
 ## Log de sessões
 
+Uma linha por sessão, a mais recente no topo.
+
 - 2026-11-01 · human · tarefa criada

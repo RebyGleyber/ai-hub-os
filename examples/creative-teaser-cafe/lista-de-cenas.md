@@ -28,7 +28,7 @@ A ordem de gravação abaixo foi otimizada pelo horário da luz natural da manh�
 
 | Item | Status | Horário Sugerido | Local | Quem Grava | Texto Exato da Locução (Cena 4: 22–30 s) | Direção de Voz |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Áudio Condicional A1 (Locução Cena 4)** | **CONDICIONAL** (só gravar/usar na versão final se D-003 for aprovada ou para entregar a Versão A prevista em D-004) | 10h15 – 10h45 (após encerrar os planos de vídeo, com ambiente em silêncio total) | Interior do Café Aurora (ambiente fechado e silencioso, sem ruído de rua ou geladeira) | 1 integrante feminina da equipe ou cliente voluntária (sem locutora paga) | *"Café Aurora. Inauguração: sábado, quatorze de novembro, às oito horas."* | Voz calma, acolhedora, volume suave, sem tom comercial ou promocional (D-002) |
+| **Áudio Condicional A1 (Locução Cena 4)** | **CONDICIONAL** (só gravar/usar na versão final se D-003 for aprovada ou para entregar a Versão A prevista em D-004) | 10h00 – 10h30 (após encerrar os planos de vídeo, com ambiente em silêncio total) | Interior do Café Aurora (ambiente fechado e silencioso, sem ruído de rua ou geladeira) | 1 integrante feminina da equipe ou cliente voluntária (sem locutora paga) | *"Café Aurora. Inauguração: sábado, quatorze de novembro, às oito horas."* | Voz calma, acolhedora, volume suave, sem tom comercial ou promocional (D-002) |
 | **Áudio Base B1 (Som da Máquina — Cena 2)** | **OBRIGATÓRIO** (exigido em `roteiro.md`) | Durante o Plano P-05 (09h30 – 10h00) | Balcão do Café Aurora | Equipe de captação | — (som ambiente da máquina de espresso ligando e extraindo) | Limpo, sem conversas ao fundo, para entrar sob a trilha acústica |
 
 ---

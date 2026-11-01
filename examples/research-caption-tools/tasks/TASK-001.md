@@ -50,5 +50,7 @@ Critérios prontos em `criterios.md`. A escolha das 3 ferramentas depende do tet
 
 ## Log de sessões
 
+Uma linha por sessão, a mais recente no topo.
+
 - 2026-11-01 · claude · definiu critérios; bloqueado por falta do teto de orçamento
 - 2026-11-01 · human · tarefa criada

@@ -49,6 +49,8 @@ Concluída. Roteiro aprovado pelo humano (D-004), com as duas versões de som na
 
 ## Log de sessões
 
+Uma linha por sessão, a mais recente no topo.
+
 - 2026-11-01 · human · aprovou o roteiro (D-004); status → done; abriu a TASK-002
 - 2026-11-01 · grok · escreveu a cena 4 com duas opções de som; status → review
 - 2026-11-01 · claude · escreveu as cenas 1 a 3; cena 4 pendente

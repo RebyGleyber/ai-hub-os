@@ -6,8 +6,8 @@ status: review
 owner: Gleyber Rodrigues
 created: 2026-11-01
 updated: 2026-11-01
-last_agent: gemini
-last_model: gemini-2.5-pro
+last_agent: claude
+last_model: claude-opus-5-5
 ---
 
 # TASK-002: Montar a lista de cenas para a gravação
@@ -32,17 +32,17 @@ Arquivo `lista-de-cenas.md` com tudo o que a equipe precisa para gravar o teaser
 
 ## Estado atual
 
-O arquivo `lista-de-cenas.md` foi criado cobrindo integralmente as cenas 1 a 4 de `roteiro.md`, desmembradas em 5 planos operacionais (`P-01` a `P-05`, separando a Cena 2 em `P-02` para a abertura da porta com luz natural às 07h15 e `P-05` para o detalhe da máquina de espresso às 09h30). A ordem de gravação foi organizada cronologicamente pela posição do sol (06h45 às 10h30) para execução em um único dia, utilizando apenas equipe interna e clientes voluntários. A gravação da narração feminina para a Cena 4 foi incluída em seção dedicada como item estritamente condicional, dependente da decisão `D-003` (que segue `proposed`), mantendo compatibilidade com as Versões A e B exigidas pela `D-004`. Tarefa pronta para revisão humana.
+`lista-de-cenas.md` criado pelo Gemini: 5 planos (P-01 a P-05) cobrindo de 0 a 30 s, em ordem de luz para um único dia, só com equipe e voluntários, e a narração como item condicional. O Claude corrigiu uma inconsistência: a narração estava a 10h15–10h45 na tabela de áudio e a 10h00–10h30 no cronograma; ficou 10h00–10h30 nos dois. Recomendação: gravar a narração de qualquer jeito (30 min) e decidir D-003 na edição, com as duas versões prontas. Aguardando revisão humana.
 
 ## Handoff
 
-- **Arquivos alterados:** `lista-de-cenas.md` (criado), `tasks/TASK-002.md` (atualizado)
-- **Bloqueios atuais:** Decisão `D-003` (narração em voz feminina na cena 4) permanece com status `proposed` em `DECISIONS.md` (não bloqueia a aprovação de `lista-de-cenas.md`, mas define se o item condicional de locução será executado na diária/edição).
+- **Arquivos alterados:** `lista-de-cenas.md`, `tasks/TASK-002.md`
+- **Bloqueios atuais:** nenhum
 - **Próximos 3 passos:**
-  1. Humano (`Gleyber Rodrigues`) revisar e aprovar `lista-de-cenas.md` e definir o status de `D-003` (`accepted` ou revogada) em `DECISIONS.md`.
-  2. Marcar `tasks/TASK-002.md` como `done` após o commit/merge na branch principal.
-  3. Abrir a `TASK-003` para acompanhar a execução da diária de gravação e a montagem das versões finais do vídeo de 30s (9:16).
-- **Validação:** não verificado (conferência manual de conformidade contra os critérios de pronto de `TASK-002.md`, `roteiro.md`, `PROJECT.md` e decisões `D-001`, `D-002` e `D-004`; validador automatizado não executado nesta sessão).
+  1. Revisão cruzada da `lista-de-cenas.md` por uma IA que não a escreveu (o GPT), contra os critérios de pronto.
+  2. Humano aprova a lista e marca esta tarefa como `done`.
+  3. Abrir a TASK-003: execução da diária de gravação e montagem das versões A e B.
+- **Validação:** conferido por script que os trechos cobrem de 0 a 30 s sem buracos, que não há termos proibidos por D-002 e que todas as menções à marca são "Café Aurora". Os horários da narração agora coincidem nas duas seções. A viabilidade real dos horários de luz não foi verificada.
 
 ## Propostas de decisão
 
@@ -52,5 +52,6 @@ O arquivo `lista-de-cenas.md` foi criado cobrindo integralmente as cenas 1 a 4 d
 
 Uma linha por sessão, a mais recente no topo.
 
+- 2026-11-01 · claude · alinhou o horário da narração (10h00–10h30) entre tabela e cronograma; handoff atualizado
 - 2026-11-01 · gemini · (gemini-2.5-pro) criou `lista-de-cenas.md` com 5 planos otimizados por luz para 1 dia e narração condicional (D-003); atualizou `tasks/TASK-002.md` para `review`
 - 2026-11-01 · human · tarefa criada a partir da aprovação da TASK-001

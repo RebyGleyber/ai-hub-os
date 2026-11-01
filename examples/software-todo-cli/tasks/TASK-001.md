@@ -49,5 +49,7 @@ Comandos `add` e `list` implementados em `todo.py`, com 4 testes em `test_todo.p
 
 ## Log de sessões
 
+Uma linha por sessão, a mais recente no topo.
+
 - 2026-11-01 · claude · implementou add e list com 4 testes; enviado para revisão
 - 2026-11-01 · human · tarefa criada
