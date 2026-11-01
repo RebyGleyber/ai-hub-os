@@ -28,7 +28,7 @@ Produzir um vídeo teaser de 30 segundos anunciando a inauguração do Café Aur
 
 ## Contexto essencial
 
-- Situação atual: roteiro em rascunho, ainda sem o fechamento.
+- Situação atual: roteiro aprovado (D-004); próxima etapa é a lista de cenas para gravação (TASK-002).
 - Público: moradores do bairro, 25 a 45 anos, que trabalham de casa.
 - Abordagem: mostrar o café como "o escritório do bairro", com luz da manhã e pessoas reais.
 - Tom e estilo: acolhedor, calmo, sem gritar promoção (ver D-002).
@@ -46,4 +46,4 @@ Produzir um vídeo teaser de 30 segundos anunciando a inauguração do Café Aur
 
 ## Referências
 
-- `roteiro.md`: roteiro em andamento. Ler sempre que a tarefa for de roteiro ou gravação.
+- `roteiro.md`: roteiro aprovado (D-004). Ler sempre que a tarefa for de roteiro ou gravação.
