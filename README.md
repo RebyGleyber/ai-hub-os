@@ -44,7 +44,13 @@ python -m pytest
 
 ## 3. Como trocar de IA
 
-Cole na IA escolhida os três arquivos (`PROJECT.md`, `DECISIONS.md` e a tarefa) e esta mensagem:
+**Jeito rápido:** gere o pacote da tarefa e cole o conteúdo inteiro na IA. Ele já traz as instruções abaixo e todos os arquivos necessários, para IAs que não conseguem abrir links do GitHub.
+
+```bash
+python hub_pack.py caminho/do/projeto TASK-002 -o pacote.md
+```
+
+**Jeito manual:** cole na IA escolhida os três arquivos (`PROJECT.md`, `DECISIONS.md` e a tarefa) e esta mensagem:
 
 ```text
 Você vai continuar a tarefa TASK-NNN seguindo as regras do PROJECT.md.
