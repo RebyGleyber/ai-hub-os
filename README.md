@@ -1,6 +1,6 @@
 # AI HUB OS
 
-Um protocolo simples para que qualquer IA (Claude, ChatGPT, Gemini, Grok, Argon ou outra) continue o trabalho de outra, em qualquer tipo de projeto, usando só arquivos de texto e Git.
+Um protocolo simples para que qualquer IA (Claude, ChatGPT, Gemini, Grok ou outra) continue o trabalho de outra, em qualquer tipo de projeto, usando só arquivos de texto e Git.
 
 - Especificação: [`SPEC.md`](SPEC.md) (AI HUB Protocol v0.4)
 - Templates: [`templates/`](templates)
