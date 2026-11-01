@@ -68,10 +68,17 @@ def has(report, fragment, level="ERRO"):
 
 # ------------------------------------------------------------ arquivos válidos
 
-@pytest.mark.parametrize("path", [TEMPLATE, *EXAMPLES], ids=lambda p: p.name)
-def test_template_and_examples_are_valid(path):
-    report = hub_validate.validate_project(path)
+def test_template_is_clean():
+    report = hub_validate.validate_project(TEMPLATE)
     assert report.issues == [], messages(report)
+
+
+@pytest.mark.parametrize("path", EXAMPLES, ids=lambda p: p.name)
+def test_examples_have_no_errors(path):
+    # exemplos guardam sessões reais de IAs e podem ter avisos documentados
+    # em RESULTADOS.md; erros, nunca
+    report = hub_validate.validate_project(path)
+    assert report.errors == [], messages(report, "ERRO")
 
 
 def test_started_task_with_full_handoff_is_valid(project):
