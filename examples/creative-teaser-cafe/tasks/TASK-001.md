@@ -36,7 +36,7 @@ Cenas 1 a 3 escritas em `roteiro.md` (0 a 22 s). Falta a cena 4 (22 a 30 s), que
 ## Handoff
 
 - **Arquivos alterados:** `roteiro.md`
-- **Bloqueios atuais:** nenhum que impeça escrever a cena 4; só a narração depende da aprovação de D-003
+- **Bloqueios atuais:** nenhum
 - **Próximos 3 passos:**
   1. Escrever a cena 4 em `roteiro.md` com "Café Aurora", "Inauguração: sábado, 14/11, às 8h" e a porta aberta com movimento.
   2. Escrever duas versões do som da cena 4: com narração (se D-003 for aprovada) e só com trilha.

@@ -389,7 +389,12 @@ def validate_task_file(path: Path, project_id: str | None, decisions: dict[str, 
     if is_empty(values.get("validation")):
         report.warn(name, "handoff sem 'Validação' (recomendado: o que foi verificado e como, ou 'não verificado')")
 
-    if status == "blocked" and str(values.get("blockers", "")).strip().casefold() in NONE_VALUES:
+    blockers = str(values.get("blockers", "")).strip().casefold()
+    first_word = re.split(r"[\s,;.:—-]+", blockers, maxsplit=1)[0] if blockers else ""
+    if first_word in NONE_VALUES and blockers not in NONE_VALUES:
+        report.warn(name, "'Bloqueios atuais' mistura 'nenhum' com outro texto; escreva só 'nenhum' e mova dependências para o Estado atual")
+
+    if status == "blocked" and blockers in NONE_VALUES:
         report.error(name, "status 'blocked', mas 'Bloqueios atuais' diz que não há bloqueio")
 
 

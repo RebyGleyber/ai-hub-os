@@ -265,6 +265,17 @@ def test_handoff_without_validation_is_only_a_warning(project):
     assert has(report, "sem 'Validação'", level="AVISO")
 
 
+def test_blockers_mixing_none_with_dependency_is_warning(project):
+    # caso real do 1º teste de continuidade (Grok): "nenhum que impeça..., só X depende de D-003"
+    ambiguous = STARTED_HANDOFF.replace(
+        "**Bloqueios atuais:** nenhum",
+        "**Bloqueios atuais:** nenhum que impeça a cena 4; só a narração depende de aprovação")
+    start_task(project, ambiguous)
+    report = hub_validate.validate_project(project)
+    assert report.errors == []
+    assert has(report, "mistura 'nenhum'", level="AVISO")
+
+
 def test_blocked_task_needs_a_real_blocker(project):
     task = start_task(project)
     replace(task, "status: doing", "status: blocked")

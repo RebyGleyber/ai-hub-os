@@ -101,7 +101,7 @@ Seções do corpo, nesta ordem: Objetivo · Critério de pronto · Leitura obrig
 Toda IA, ao encerrar uma sessão, preenche a seção `## Handoff` com estes três itens obrigatórios:
 
 1. **Arquivos alterados:** caminhos entre crases (relativos à raiz do projeto), ou `nenhum`. Cada caminho citado precisa existir.
-2. **Bloqueios atuais:** o que impede o avanço, ou `nenhum`.
+2. **Bloqueios atuais:** só o que impede o próximo passo agora, ou exatamente `nenhum`. Dependência que não impede (decisão `proposed`, aprovação futura) não é bloqueio: vai no Estado atual ou em Propostas de decisão.
 3. **Próximos 3 passos:** três ações exatas e numeradas para a próxima IA.
 
 Item recomendado (gera aviso se faltar, não erro):
