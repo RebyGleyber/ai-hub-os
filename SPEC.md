@@ -133,7 +133,7 @@ Uma tarefa iniciada por uma IA é continuada corretamente por outra, de outro fo
 2. Qual é a decisão aceita mais recente que afeta a tarefa?
 3. Qual é o próximo passo?
 4. O que está bloqueado?
-5. Qual arquivo foi alterado por último?
+5. Quais arquivos a última sessão desta tarefa alterou? (tarefa ainda não iniciada: "nenhum")
 
 Meta: 5 de 5 sem perguntas ao humano.
 

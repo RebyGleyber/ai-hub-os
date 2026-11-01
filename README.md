@@ -59,7 +59,7 @@ Antes de trabalhar, responda só com os arquivos:
 2. Qual é a decisão aceita mais recente que afeta a tarefa?
 3. Qual é o próximo passo?
 4. O que está bloqueado?
-5. Qual arquivo foi alterado por último?
+5. Quais arquivos a última sessão desta tarefa alterou? (tarefa ainda não iniciada: "nenhum")
 Depois, execute os próximos passos. Ao terminar, atualize a tarefa
 (updated, last_agent, Estado atual, Handoff e uma linha no Log) e devolva
 cada arquivo alterado completo, num bloco de código com o caminho na primeira linha.

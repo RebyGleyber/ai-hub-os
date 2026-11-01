@@ -25,7 +25,7 @@ Antes de trabalhar, responda só com os arquivos:
 2. Qual é a decisão aceita mais recente que afeta a tarefa?
 3. Qual é o próximo passo?
 4. O que está bloqueado?
-5. Qual arquivo foi alterado por último?
+5. Quais arquivos a última sessão desta tarefa alterou? (tarefa ainda não iniciada: "nenhum")
 
 Depois, execute a tarefa. Ao terminar, atualize {task_path}
 (updated, last_agent, Estado atual, Handoff e uma linha no Log) e devolva
@@ -70,7 +70,8 @@ def build_pack(root: Path, task_id: str) -> str:
     parts = [PROMPT.format(task_id=task_id, project_id=project_id, task_path=task_rel)]
     for rel in files:
         content = (root / rel).read_text(encoding="utf-8").rstrip("\n")
-        parts.append(f"\n## `{rel}`\n\n````markdown\n{content}\n````\n")
+        lang = {".py": "python", ".yaml": "yaml", ".yml": "yaml", ".json": "json"}.get(Path(rel).suffix, "markdown")
+        parts.append(f"\n## `{rel}`\n\n````{lang}\n{content}\n````\n")
     return "".join(parts)
 
 

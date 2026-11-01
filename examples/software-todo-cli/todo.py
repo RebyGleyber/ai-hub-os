@@ -24,6 +24,16 @@ def add(text: str, path: Path = DATA_FILE) -> dict:
     return item
 
 
+def done(item_id: int, path: Path = DATA_FILE) -> dict:
+    items = load(path)
+    for item in items:
+        if item["id"] == item_id:
+            item["done"] = True
+            save(items, path)
+            return item
+    raise ValueError(f"Item não encontrado: {item_id}")
+
+
 def format_list(items: list[dict]) -> str:
     if not items:
         return "Nenhum item."
@@ -38,7 +48,20 @@ def main(argv: list[str]) -> int:
     if argv == ["list"]:
         print(format_list(load()))
         return 0
-    print('Uso: python todo.py add "texto" | python todo.py list')
+    if len(argv) == 2 and argv[0] == "done":
+        try:
+            item_id = int(argv[1])
+        except ValueError:
+            print("Erro: o ID deve ser um número inteiro.", file=sys.stderr)
+            return 1
+        try:
+            item = done(item_id)
+        except ValueError as exc:
+            print(f"Erro: {exc}", file=sys.stderr)
+            return 1
+        print(f"Concluído: {item['id']}. {item['text']}")
+        return 0
+    print('Uso: python todo.py add "texto" | python todo.py list | python todo.py done <id>')
     return 1
 
 
