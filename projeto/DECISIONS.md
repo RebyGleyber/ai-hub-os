@@ -31,3 +31,12 @@ Status possíveis: `proposed` | `accepted` | `superseded`. Só o humano marca `a
 - **Decisão:** Construir a interface v1 (TASK-001), com o ChatGPT como responsável e o Claude como revisor. Na v1, a interface organiza o fluxo e não chama modelos de IA por conta própria.
 - **Motivo:** O atrito medido é copiar e colar e não ver o estado das tarefas num lugar só.
 - **Substitui:** —
+
+## D-004: Claude constrói a Fase 1 do painel; GPT revisa
+
+- **Status:** proposed
+- **Data:** 2026-11-02
+- **Aprovado por:** —
+- **Decisão:** Pelo briefing de 02/11/2026, o Claude passa a ser o responsável pela TASK-001 (proposta e construção da Fase 1, conforme `INTERFACE.md`) e o ChatGPT passa a ser o revisor. O resto da D-003 continua: o painel só chama uma IA quando o humano clica em "Enviar".
+- **Motivo:** O humano pediu a proposta técnica e a implementação diretamente ao Claude.
+- **Substitui:** —
